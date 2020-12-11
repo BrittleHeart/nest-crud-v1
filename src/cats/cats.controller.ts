@@ -1,33 +1,20 @@
 import { Body, Controller, Delete, ForbiddenException, Get, Param, Post, Put, Req } from '@nestjs/common';
 import { CreateCatDto } from './create-cat.dto';
-import { UpdateCatDto } from './update-cat.dto';
+import { Cat } from './cat.interface'
+import { CatsService } from './cats.service';
 
 @Controller('cats')
 export class CatsController {
-    @Get()
-    findAll(): string {
-        return 'This action returns all cats';
-    }
+    constructor(private readonly catsService: CatsService) {}
 
-    @Get(':id')
-    findOne(@Param('id') id: number): string {
-        return `This function search for resource with id = ${id}`
+    @Get()
+    async findAll(): Promise<Cat[]> {
+        return this.catsService.findAll();
     }
 
     @Post()
-    create(@Body() createCatDto: CreateCatDto): any {
-        const {name, age, breed} = createCatDto
-        if(!name || !age || !breed)
-            throw new ForbiddenException()
+    async create(@Body() createCatDto: CreateCatDto): Promise<void> {
+        return this.catsService.create(createCatDto)
     }
 
-    @Put(':id')
-    update(@Param('id') id: number, @Body() updateCatDto: UpdateCatDto): string {
-        return `This method take the resource with id = ${id} and updated the ${updateCatDto}`
-    }
-
-    @Delete(':id')
-    remove(@Param('id') id: number): string {
-        return `This method take the resource with id = ${id} and drops it`
-    }
 }
