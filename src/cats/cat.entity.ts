@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity()
+@Entity({name: 'cats'})
 export class CatEntity {
     @PrimaryGeneratedColumn()
     readonly id: number;
@@ -8,7 +8,7 @@ export class CatEntity {
     @Column({type: 'varchar', length: 45, nullable: false})
     readonly name: string;
 
-    @Column({type: 'int', nullable: false, unique: true})
+    @Column({type: 'int', nullable: false})
     readonly age: number;
 
     @Column({type: 'varchar', length: 45, nullable: false})

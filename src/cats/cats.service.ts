@@ -18,4 +18,8 @@ export class CatsService {
     async findOne(id: number): Promise<Cat | undefined> {
         return await this.catRepository.findOne({id})
     }
+
+    async store(cat: Cat): Promise<Cat> {
+        return await this.catRepository.save(cat)
+    }
 }
