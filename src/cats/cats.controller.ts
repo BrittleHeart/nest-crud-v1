@@ -12,6 +12,11 @@ export class CatsController {
         return this.catsService.findAll();
     }
 
+    @Get(':name')
+    async findOne(@Param('name') name: string): Promise<Cat> {
+        return this.catsService.findOne(name)
+    }
+
     @Post()
     async create(@Body() createCatDto: CreateCatDto): Promise<void> {
         return this.catsService.create(createCatDto)
