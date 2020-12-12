@@ -1,4 +1,5 @@
-import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post, Put, RequestTimeoutException, Res } from '@nestjs/common';
+import { JWTAuthGuard } from './../auth/jwt-auth.guard';
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post, Put, RequestTimeoutException, Res, UseGuards } from '@nestjs/common';
 import { Cat } from './cat.interface';
 import { CatsService } from './cats.service';
 import { Response } from 'express'
@@ -6,9 +7,10 @@ import { CreateCatDto } from './dto/create-cat-dto';
 import * as yup from 'yup';
 
 @Controller('cats')
-export class CatsController {   
+export class CatsController {
     constructor(private readonly catsService: CatsService) {}
 
+    @UseGuards(JWTAuthGuard)
     @Get()
     async findAll(@Res() response: Response): Promise<Response<Cat[]> | Response<undefined>> {
         const cats = await this.catsService.findAll();
