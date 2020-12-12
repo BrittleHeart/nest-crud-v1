@@ -1,3 +1,4 @@
+import { JwtStrategy } from './jwt.strategy';
 import { jwtContants } from './constants';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
@@ -13,7 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
     PassportModule, 
     JwtModule.register({secret: jwtContants.secret, signOptions: {expiresIn: '1d'}})
   ], // PassportModule gives us the built-in guard for protecting our routes with some strategies that where implemented
-  providers: [AuthService, LocalStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController]
 })
 export class AuthModule {}
