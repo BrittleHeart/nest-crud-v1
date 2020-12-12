@@ -19,6 +19,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
      * This function is almost the same the function located in the auth service. But this time, the whole logic is
      * controlled by the strategy
      * 
+     * Also, validate method is required. LocalStrategy is going to try attach this function to it's own
+     * 
      * @param username 
      * @param password 
      */
