@@ -20,6 +20,13 @@ export class CatsService {
     }
 
     async store(cat: Cat): Promise<Cat> {
-        return await this.catRepository.save(cat)
+        const nowTimestamp = new Date().toISOString()
+        return await this.catRepository.save({
+            name: cat.name, 
+            age: cat.age, 
+            breed: cat.breed, 
+            created_at: nowTimestamp, 
+            updated_at: nowTimestamp
+        })
     }
 }
