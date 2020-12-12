@@ -1,4 +1,4 @@
-import { Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, HttpCode, Post, Req, UseGuards } from '@nestjs/common';
 import {Request} from 'express';
 import { LocalAuthGuard } from './local-auth.guard';
 
@@ -6,6 +6,7 @@ import { LocalAuthGuard } from './local-auth.guard';
 export class AuthController {
     @UseGuards(LocalAuthGuard)
     @Post('login')
+    @HttpCode(200)
     async login(@Req() request: Request): Promise<any> {
         // Passport automatically creates user object attached to request
         return request.user;
