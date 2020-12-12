@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, NotFoundException, Param, ParseIntPipe, Post, Put, RequestTimeoutException, Res } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post, Put, RequestTimeoutException, Res } from '@nestjs/common';
 import { Cat } from './cat.interface';
 import { CatsService } from './cats.service';
 import { Response } from 'express'
@@ -40,5 +40,12 @@ export class CatsController {
             throw new BadRequestException()
 
         return response.status(200).json({stauts: 200, updated_cat})
+    }
+
+    @Delete(':id')
+    async destroy(@Param('id') id: number, @Res() response: Response): Promise<Response | undefined> {
+        await this.catsService.delete(id)
+
+        return response.status(200).json({stauts: 200, message: `Cat with id ${id} has been deleted`})
     }
 }
