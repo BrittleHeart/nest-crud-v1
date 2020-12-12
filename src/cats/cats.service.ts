@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import { CatEntity } from './cat.entity';
 import { Cat } from './cat.interface';
 
@@ -28,5 +28,9 @@ export class CatsService {
             created_at: nowTimestamp, 
             updated_at: nowTimestamp
         })
+    }
+
+    async update(id: number, cat: Cat): Promise<Cat | undefined> {
+        return await this.catRepository.query('Update cats set name = ? where id = ?', [cat.name, id])
     }
 }

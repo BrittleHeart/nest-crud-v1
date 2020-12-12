@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, NotFoundException, Param, ParseIntPipe, Post, RequestTimeoutException, Res } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, NotFoundException, Param, ParseIntPipe, Post, Put, RequestTimeoutException, Res } from '@nestjs/common';
 import { Cat } from './cat.interface';
 import { CatsService } from './cats.service';
 import { Response } from 'express'
@@ -31,5 +31,14 @@ export class CatsController {
     async store(@Body() createCatDto: CreateCatDto, @Res() response: Response): Promise<Response<Cat> | Response<undefined>> {
         const new_cat = await this.catsService.store(createCatDto)
         return response.status(201).json(new_cat)
+    }
+
+    @Put(':id')
+    async update(@Body() createCatDto: CreateCatDto, @Param('id') id: number, @Res() response: Response): Promise<Response | undefined> {
+        const updated_cat = await this.catsService.update(id, createCatDto)
+        if(!updated_cat)
+            throw new BadRequestException()
+
+        return response.status(200).json({stauts: 200, updated_cat})
     }
 }
