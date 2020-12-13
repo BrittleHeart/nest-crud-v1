@@ -1,4 +1,4 @@
-import { JWTAuthGuard } from './../auth/jwt-auth.guard';
+import { JWTAuthGuard } from './../auth/guards/jwt-auth.guard';
 import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post, Put, RequestTimeoutException, Res, UseGuards } from '@nestjs/common';
 import { Cat } from './cat.interface';
 import { CatsService } from './cats.service';
